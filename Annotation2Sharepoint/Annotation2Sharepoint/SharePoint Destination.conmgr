@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="SharePoint Destination"
+  DTS:DTSID="{4C46C241-67AC-4209-BB31-48DCA5320BF0}"
+  DTS:CreationName="SharePoint (KingswaySoft)">
+  <DTS:ObjectData>
+    <SharePointConnectionManager
+      ConnectionString="ServiceUrl=https://ktdemo201.sharepoint.com/sites/Trial;UserName=kt@ktdemo201.onmicrosoft.com;Domain=;ProxyUsername=;HomeRealmUri=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;ServiceTimeout=120;AuthenticationType=OnlineFederation;RetryOnIntermittentErrors=True;MultiAuthenticationSite=False;IgnoreCertificateErrors=False">
+      <Password
+        Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAokrNX8iVQ0aZ09xQ/JDrHwAAAAACAAAAAAADZgAAwAAAABAAAAAndJtXZoT3UKtIW1mB7wVgAAAAAASAAACgAAAAEAAAAPX7Q2Dv4TJ+W9T2JeV07WZYAAAAfEqMLL/GBzu4zOIAjLnRrh9MRt5Umgl/BXZTQMpHkO8FosqfM84mPPpFWqmPVsNi7zZEk+LYs7Ar8toP9GpsUyKvfhUbx3dAn+u4MAwEnufb+D28xedDjRQAAADnaAuRItIklZC7OhtJiXcIxl9ivA==</Password>
+    </SharePointConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

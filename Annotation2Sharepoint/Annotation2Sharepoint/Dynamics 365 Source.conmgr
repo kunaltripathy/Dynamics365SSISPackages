@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="Dynamics 365 Source"
+  DTS:DTSID="{2C31B9A6-4BD4-4BE7-98DD-B361E0034DD2}"
+  DTS:CreationName="DynamicsCRM">
+  <DTS:ObjectData>
+    <CrmConnectionManager
+      ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm3.dynamics.com;UserName=kt@ktdemo201.onmicrosoft.com;Domain=;OrganizationName=Adoxio;CrmServerUrl=https://ktdemo201.api.crm3.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+      <Password
+        Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAokrNX8iVQ0aZ09xQ/JDrHwAAAAACAAAAAAADZgAAwAAAABAAAADfF2R1q8pA08BELw++NFERAAAAAASAAACgAAAAEAAAAFakpN7FALAn5t2KMkacQIhYAAAA6tO7+71i0BzaTX6OB6I8qnOeSzNQFFg2NrA/G1+UacIe06vhdy6+JEXTb7HwJ3CKVWfvlL+s7HuXShdllL4bfeNwsIk3iKrDnu6YvAHGj1CfdhMafYe3TBQAAADRigMRWbP92aYOrDM2/NuHd3f0Ng==</Password>
+    </CrmConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
