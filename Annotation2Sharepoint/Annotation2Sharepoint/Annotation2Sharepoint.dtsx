@@ -11,8 +11,8 @@
   DTS:LocaleID="4105"
   DTS:ObjectName="Annotation2Sharepoint"
   DTS:PackageType="5"
-  DTS:VersionBuild="46"
-  DTS:VersionGUID="{06C1F964-9950-4B7E-8EEA-875455A21E2E}">
+  DTS:VersionBuild="50"
+  DTS:VersionGUID="{8B5AA7CB-D3A1-4E62-9D04-11307FBF7344}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -510,13 +510,13 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query Entity with annotation type document- Filter records with associated document Location.Outputs[Primary Output].Columns[title]} + "_" + [REPLACE]([REPLACE]([REPLACE]((DT_WSTR,70)#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query Entity with annotation type document- Filter records with associated document Location.Outputs[Primary Output].Columns[incidentid]},"{",""),"}",""),"-","")</property>
+                          name="Expression">@[$Project::FolderwithGuid] ? #{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query Entity with annotation type document- Filter records with associated document Location.Outputs[Primary Output].Columns[title]} + "_" + [REPLACE]([REPLACE]([REPLACE]((DT_WSTR,70)#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query Entity with annotation type document- Filter records with associated document Location.Outputs[Primary Output].Columns[incidentid]},"{",""),"}",""),"-","") : #{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query Entity with annotation type document- Filter records with associated document Location.Outputs[Primary Output].Columns[title]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">title + "_" + REPLACE(REPLACE(REPLACE((DT_WSTR,70)incidentid,"{",""),"}",""),"-","")</property>
+                          name="FriendlyExpression">@[$Project::FolderwithGuid] ? title + "_" + REPLACE(REPLACE(REPLACE((DT_WSTR,70)incidentid,"{",""),"}",""),"-","") : title</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -598,13 +598,13 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">[ISNULL](#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[Relative Path]}) ? (#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[ab.title]} + "_" + [REPLACE]([REPLACE]([REPLACE]((DT_WSTR,70)#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[objectid]},"{",""),"}",""),"-","")) : #{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[Relative Path]}</property>
+                          name="Expression">![ISNULL](#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[Relative Path]}) ? #{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[Relative Path]} : @[$Project::FolderwithGuid] ? (#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[ab.title]} + "_" + [REPLACE]([REPLACE]([REPLACE]((DT_WSTR,70)#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[objectid]},"{",""),"}",""),"-","")) : #{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[ab.title]}</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">ISNULL([Relative Path]) ? ([ab.title] + "_" + REPLACE(REPLACE(REPLACE((DT_WSTR,70)objectid,"{",""),"}",""),"-","")) : [Relative Path]</property>
+                          name="FriendlyExpression">!ISNULL([Relative Path]) ? [Relative Path] : @[$Project::FolderwithGuid] ? ([ab.title] + "_" + REPLACE(REPLACE(REPLACE((DT_WSTR,70)objectid,"{",""),"}",""),"-","")) : [ab.title]</property>
                       </properties>
                     </inputColumn>
                     <inputColumn
@@ -649,13 +649,13 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[notetext]} + (DT_NTEXT)" *File moved to SharePoint*"</property>
+                          name="Expression">[ISNULL](#{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[notetext]}) ? (DT_NTEXT)" *File moved to SharePoint*" : #{Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Merge by unique id.Outputs[Merge Join Output].Columns[notetext]} + (DT_NTEXT)" *File moved to SharePoint*"</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">notetext + (DT_NTEXT)" *File moved to SharePoint*"</property>
+                          name="FriendlyExpression">ISNULL(notetext) ? (DT_NTEXT)" *File moved to SharePoint*" : notetext + (DT_NTEXT)" *File moved to SharePoint*"</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -4186,7 +4186,7 @@
           Id="a15f1fa7-d212-487e-96e6-6d7560154285"
           TopLeft="1154,287" />
         <AnnotationLayout
-          Text="&#xA;&#xA;DISCLAIMER: THIS PACKAGE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&#xD;&#xA; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,&#xD;&#xA; WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&#xA;&#xA;Pre-requisites:&#xA;1. KingswaySoft SSIS Integration Toolkit - Microsoft Dynamics 365 - https://www.kingswaysoft.com/products/ssis-integration-toolkit-for-microsoft-dynamics-365&#xD;&#xA;2. KingswaySoft SSIS Integration Toolkit - Microsoft SharePoint - https://www.kingswaysoft.com/products/ssis-integration-toolkit-for-microsoft-sharepoint&#xA;3. Dynamics 365 Instance for source&#xD;&#xA;4. SharePoint Site&#xD;&#xA;&#xD;&#xA;Note: The package Demonstrates on how to migrate document stored as notes from Dynamics 365 Case entity but could be repurposed for migrating documents for any entity.&#xD;&#xA;&#xD;&#xA;The package is for OOB default SharePoint Configurations in Dynamics 365 but could be changed to work with different configuration: &#xD;&#xA; 1. Documents are stored by Entity&#xD;&#xA; 2. Documents Folders use GUIDs&#xD;&#xA;&#xD;&#xA;Refer: http://Kunaltripathy.com"
+          Text="&#xA;&#xA;DISCLAIMER: THIS PACKAGE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&#xA; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,&#xA; WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&#xA;&#xA;Pre-requisites:&#xA;1. KingswaySoft SSIS Integration Toolkit - Microsoft Dynamics 365 - https://www.kingswaysoft.com/products/ssis-integration-toolkit-for-microsoft-dynamics-365&#xA;2. KingswaySoft SSIS Integration Toolkit - Microsoft SharePoint - https://www.kingswaysoft.com/products/ssis-integration-toolkit-for-microsoft-sharepoint&#xA;3. Dynamics 365 Instance for source&#xA;4. SharePoint Site&#xA;&#xA;Note: The package Demonstrates on how to migrate document stored as notes from Dynamics 365 Case entity but could be repurposed for migrating documents for any entity.&#xA;&#xA;The package is for OOB default SharePoint Configurations in Dynamics 365 but could be changed to work with different configuration: &#xA; 1. Documents are stored by Entity&#xA; 2. Documents Folders use GUIDs&#xA;&#xA;Refer: http://Kunaltripathy.com"
           ParentId="Package"
           FontInfo="{assembly:Null}"
           Size="1033,327"
@@ -4199,35 +4199,27 @@
     design-time-name="Package\Migrate Documents from Dynamics 365 Notes to SharePoint">
     <LayoutInfo>
       <GraphLayout
-        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="208,42"
           Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Create Folder in SharePoint"
           TopLeft="84,282" />
         <NodeLayout
-          Size="237,42"
-          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Derive Document Location details"
-          TopLeft="82,134" />
-        <NodeLayout
-          Size="168,42"
-          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Sort by Incident Id"
-          TopLeft="456,278" />
-        <NodeLayout
           Size="199,42"
           Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Premium Derived Column"
           TopLeft="68.5,409.5" />
         <NodeLayout
-          Size="458,42"
-          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query all Annotations containg attached document - filtered by associated Entity"
-          TopLeft="653,26" />
+          Size="525,42"
+          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query Entity with annotation type document- Filter records with associated document Location"
+          TopLeft="72,21" />
         <NodeLayout
           Size="205,42"
           Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Dynamics CRM Destination"
           TopLeft="387,162" />
         <NodeLayout
-          Size="164,49"
-          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Derive folder path"
-          TopLeft="370,404" />
+          Size="237,42"
+          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Derive Document Location details"
+          TopLeft="82,134" />
         <NodeLayout
           Size="175,42"
           Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Mark Note as Moved"
@@ -4241,81 +4233,21 @@
           Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Sort by Objectid"
           TopLeft="666,157" />
         <NodeLayout
-          Size="525,42"
-          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query Entity with annotation type document- Filter records with associated document Location"
-          TopLeft="72,21" />
+          Size="168,42"
+          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Sort by Incident Id"
+          TopLeft="456,278" />
+        <NodeLayout
+          Size="164,49"
+          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Derive folder path"
+          TopLeft="370,404" />
+        <NodeLayout
+          Size="458,42"
+          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Query all Annotations containg attached document - filtered by associated Entity"
+          TopLeft="653,26" />
         <NodeLayout
           Size="197,42"
           Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint\Create files in SharePoint"
           TopLeft="78,563" />
-        <EdgeLayout
-          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint.Paths[Sort Output1]"
-          TopLeft="743.5,199">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-26.5,206"
-              Start="0,0"
-              End="-26.5,198.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,118.447552447552" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,118.447552447552"
-                    Point2="0,122.447552447552"
-                    Point3="-4,122.447552447552" />
-                  <mssgle:LineSegment
-                    End="-22.5,122.447552447552" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-22.5,122.447552447552"
-                    Point2="-26.5,122.447552447552"
-                    Point3="-26.5,126.447552447552" />
-                  <mssgle:LineSegment
-                    End="-26.5,198.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint.Paths[Sort Output]"
-          TopLeft="540,320">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="123,85"
-              Start="0,0"
-              End="123,77.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,46.5244755244755" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,46.5244755244755"
-                    Point2="0,50.5244755244755"
-                    Point3="4,50.5244755244755" />
-                  <mssgle:LineSegment
-                    End="119,50.5244755244755" />
-                  <mssgle:CubicBezierSegment
-                    Point1="119,50.5244755244755"
-                    Point2="123,50.5244755244755"
-                    Point3="123,54.5244755244755" />
-                  <mssgle:LineSegment
-                    End="123,77.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint.Paths[Merge Join Output]"
           TopLeft="605,427.25">
@@ -4335,7 +4267,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-39.75,5,16,16"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4357,7 +4291,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-55.5,5,16,16"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4386,6 +4322,42 @@
                     Point3="38,28" />
                   <mssgle:LineSegment
                     End="60.5,28" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="26,-22,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint.Paths[Default Output3]"
+          TopLeft="208,563">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="765.5,-38"
+              Start="0,0"
+              End="765.5,-30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-11.3836858006042" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-11.3836858006042"
+                    Point2="0,-15.3836858006042"
+                    Point3="4,-15.3836858006042" />
+                  <mssgle:LineSegment
+                    End="761.5,-15.3836858006042" />
+                  <mssgle:CubicBezierSegment
+                    Point1="761.5,-15.3836858006042"
+                    Point2="765.5,-15.3836858006042"
+                    Point3="765.5,-19.3836858006042" />
+                  <mssgle:LineSegment
+                    End="765.5,-30.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4524,26 +4496,26 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-172.166666666667,71"
+              EndConnector="-134,71"
               Start="0,0"
-              End="-172.166666666667,63.5">
+              End="-134,63.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,38.314333612741" />
+                    End="0,31.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,38.314333612741"
-                    Point2="0,42.314333612741"
-                    Point3="-4,42.314333612741" />
+                    Point1="0,31.5"
+                    Point2="0,35.5"
+                    Point3="-4,35.5" />
                   <mssgle:LineSegment
-                    End="-168.166666666667,42.314333612741" />
+                    End="-130,35.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="-168.166666666667,42.314333612741"
-                    Point2="-172.166666666667,42.314333612741"
-                    Point3="-172.166666666667,46.314333612741" />
+                    Point1="-130,35.5"
+                    Point2="-134,35.5"
+                    Point3="-134,39.5" />
                   <mssgle:LineSegment
-                    End="-172.166666666667,63.5" />
+                    End="-134,63.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4553,31 +4525,65 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint.Paths[Default Output3]"
-          TopLeft="208,563">
+          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint.Paths[Sort Output1]"
+          TopLeft="743.5,199">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="765.5,-38"
+              EndConnector="-26.5,206"
               Start="0,0"
-              End="765.5,-30.5">
+              End="-26.5,198.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-11.3836858006042" />
+                    End="0,118.447552447552" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-11.3836858006042"
-                    Point2="0,-15.3836858006042"
-                    Point3="4,-15.3836858006042" />
+                    Point1="0,118.447552447552"
+                    Point2="0,122.447552447552"
+                    Point3="-4,122.447552447552" />
                   <mssgle:LineSegment
-                    End="761.5,-15.3836858006042" />
+                    End="-22.5,122.447552447552" />
                   <mssgle:CubicBezierSegment
-                    Point1="761.5,-15.3836858006042"
-                    Point2="765.5,-15.3836858006042"
-                    Point3="765.5,-19.3836858006042" />
+                    Point1="-22.5,122.447552447552"
+                    Point2="-26.5,122.447552447552"
+                    Point3="-26.5,126.447552447552" />
                   <mssgle:LineSegment
-                    End="765.5,-30.5" />
+                    End="-26.5,198.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Migrate Documents from Dynamics 365 Notes to SharePoint.Paths[Sort Output]"
+          TopLeft="540,320">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="123,85"
+              Start="0,0"
+              End="123,77.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.5244755244755" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,46.5244755244755"
+                    Point2="0,50.5244755244755"
+                    Point3="4,50.5244755244755" />
+                  <mssgle:LineSegment
+                    End="119,50.5244755244755" />
+                  <mssgle:CubicBezierSegment
+                    Point1="119,50.5244755244755"
+                    Point2="123,50.5244755244755"
+                    Point3="123,54.5244755244755" />
+                  <mssgle:LineSegment
+                    End="123,77.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
