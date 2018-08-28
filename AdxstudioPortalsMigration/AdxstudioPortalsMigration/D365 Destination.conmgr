@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="D365 Destination"
+  DTS:DTSID="{82F4FB82-301F-47BE-A0D9-8C5BEF3D6609}"
+  DTS:CreationName="DynamicsCRM">
+  <DTS:ObjectData>
+    <CrmConnectionManager
+      ConnectionString="AuthenticationType=OnlineFederation;ServiceEndpoint=Soap2011;DiscoveryServerUrl=https://disco.crm.dynamics.com;UserName=SourceCRM@xyz.onmicrosoft.com;Domain=;OrganizationName=KPMG;CrmServerUrl=https://portaldemo92.api.crm.dynamics.com;ProxyUsername=;ProxyMode=NoProxy;ProxyServer=;ProxyServerPort=0;BypassProxyOnLocal=False;HomeRealmUri=;ApiVersion=;ServiceTimeout=120;RetryOnIntermittentErrors=True;IgnoreCertificateErrors=False">
+      <Password
+        Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAImqXrGTXW0WteK9NIuZoWwAAAAACAAAAAAADZgAAwAAAABAAAACYQoGEBW2lwNccoeDgNX8eAAAAAASAAACgAAAAEAAAACSzP3+JCeYtLs1SkiX+6k1YAAAAAybRgHFwzq1LPPpgZP0dYP9djXJnjxQqlrcmrB7TxO6w64Z3Wc77hXE6oj+7gP1v01YTxixhGwlqHi9rlIZOfZN6kX7Kxzup+11AcP7tEvE5toIDisz7ZBQAAAABcRCy4cFZFsmaGwHGKtbgnOSiAA==</Password>
+    </CrmConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
